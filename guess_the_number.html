@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <title>Guess The Number</title>
+    <style>
+        .container {
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-top: 10%;
+            margin-bottom: 10%;
+            background: aliceblue;
+        }
+
+        .guess {
+            margin: 5% 25%;
+        }
+
+        #guessMsg {
+            font-size: 20px;
+            padding: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <div>We choose one number for you to guess. Number is between 1 to 100. You have 10 chances. We will tell you guess
+        is high or low or correct</div>
+    <hr>
+    <div class="guess">
+        <label>Enter your guess:</label>
+        <input id="guessInput" type="text" onclick="this.select()"> <button id="guessSubmit">Submit</button>
+    </div>
+    <div class="guess">
+        <p id="previousGuess">Previous Guessed Numbers :</p>
+        <p id="guessMsg"></p>
+        <button id="guessReset" hidden>ReStart</button>
+    </div>
+</body>
+<script>
+    console.log('anil')
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let guessedNumber = '';
+    let message = '';
+    let previousGues = '';
+    let guessCount = 0;
+    const guessSubmit = document.querySelector('#guessSubmit');
+    const guessMsg = document.querySelector('#guessMsg');
+    const guessInput = document.querySelector('#guessInput');
+    const previousGuess = document.querySelector('#previousGuess');
+    const guessReset = document.querySelector('#guessReset');
+    guessSubmit.addEventListener('click', checkGuess);
+    guessReset.addEventListener('click', resetgame);
+	
+    guessInput.addEventListener('keyup', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            checkGuess();
+			this.select()
+        }
+    });
+
+    function resetgame() {
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        guessMsg.textContent = "";
+        guessInput.value = ""
+        previousGuess.textContent = "Previous Guessed Numbers :"
+        guessMsg.style.backgroundColor = "aliceblue";
+        guessReset.hidden = true;
+        guessCount = 0;
+    }
+
+    function checkGuess() {
+        guessCount++;
+        if (guessCount > 10) {
+            guessMsg.textContent = 'You are out of chance.';
+            guessReset.hidden = false;
+            return;
+        }
+        guessedNumber = Number(guessInput.value);
+        previousGuess.textContent = previousGuess.textContent + " " + guessedNumber;
+        console.log(guessInput.value)
+        if (randomNumber < guessedNumber) {
+            message = 'Your guess is high';
+            guessMsg.style.backgroundColor = "red";
+        } else if (randomNumber > guessedNumber) {
+            message = "Your guess is low";
+            guessMsg.style.backgroundColor = "red";
+        } else if (randomNumber === guessedNumber) {
+            message = "Your guess is correct";
+            guessMsg.style.backgroundColor = "lightgreen";
+            guessReset.hidden = false;
+        } else {
+            message = "Did you enter the number ?"
+            guessMsg.style.backgroundColor = "yellow";
+        }
+
+        guessMsg.textContent = message;
+    }
+
+
+</script>
+
+</html>

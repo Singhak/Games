@@ -17,7 +17,7 @@ function rollDice() {
     diceSound.play();
     setTimeout(() => {
         let diceNumer = Math.floor(Math.random() * 6) + 1;
-        let scr = 'dice-' + diceNumer + '.png';
+        let scr = 'dice-' + diceNumer + '.jpeg';
         image.src = scr
         image.classList.remove('imageSpin')
         handleScore(diceNumer);
